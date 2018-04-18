@@ -25,6 +25,19 @@ var (
 	newUsername, newPassword, newAddress string
 )
 
+func CreateUser() *usertable.UserTable{
+	//创建用户表对象
+	newUser := new(usertable.UserTable)
+	newUid :=  db.GetID() //获取自增列
+	strID := fmt.Sprintf("%03d", newUid)
+
+	newUser.Id = newUid
+	newUser.Username = "user_" + strID
+	newUser.Password = "pswd_" + strID
+	newUser.Address = "addr_" + strID
+	return newUser
+}
+
 func main(){
 	//创建数据库操作对象
 	db := boltdb.NewBoltDB(myDBName, myBucket)
@@ -57,16 +70,6 @@ func main(){
 			break
 			continue
 		}
-
-		//创建用户表对象
-		newUser := new(usertable.UserTable)
-		newUid :=  db.GetID() //获取自增列
-		strID := fmt.Sprintf("%03d", newUid)
-
-		newUser.Id = newUid
-		newUser.Username = "user_" + strID
-		newUser.Password = "pswd_" + strID	
-		newUser.Address = "addr_" + strID
 		
 		switch key{
 		case 0:

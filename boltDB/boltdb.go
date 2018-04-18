@@ -96,7 +96,7 @@ func (b *BoltDB) GetUser(key string) []uint8{
 }
 
 //获取数据表全部信息
-func (b *BoltDB) GetUserofAll() (map[string] string){
+func (b *BoltDB) GetAllUser() (map[string] string){
 	retMap := make(map[string] string)
 	b.MyBoltDB.View(func(tx *bolt.Tx) error{
 		b := tx.Bucket([]byte(b.myBucket))

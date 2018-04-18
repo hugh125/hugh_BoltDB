@@ -9,18 +9,13 @@ import(
 
 var (
 	//数据库名
-	myDBName = "./DATA/myDBName.db"
-	
+	myDBName = "./DATA/myDBName.db"	
 	//数据表名
-	myBucket = "myBucket"
-	
+	myBucket = "myBucket"	
 	//错误信息
-	errOut = "!!!!!!!!!!!! ------Command error------ !!!!!!!!!!!!!"
-	
+	errOut = "!!!!!!!!!!!! ------Command error------ !!!!!!!!!!!!!"	
 	//按键值
-	myKey string
-	//
-
+	myKey string	//
 	newUid uint64
 	newUsername, newPassword, newAddress string
 )
@@ -107,9 +102,9 @@ func main(){
 				fmt.Printf("Not found (key = %s)\n", queryUserName)
 			}
 		case 4:
-			userOfAll := db.GetUserofAll()			//获取数据表全部信息
-			for k := range userOfAll{
-				fmt.Printf("key = %s, %s\n",k, userOfAll[k])
+			allUser := db.GetAllUser()			//获取数据表全部信息
+			for k := range allUser{
+				fmt.Printf("key = %s, %s\n",k, allUser[k])
 			}
 		case 5:
 			db.DeleteBucket()			//删除数据表

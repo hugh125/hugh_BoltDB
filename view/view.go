@@ -26,7 +26,14 @@ type Operation struct{
 	Myuser *usertable.UserTable
 	isOK bool
 
-	cmdOut := 
+	cmdOut string 
+}
+
+//操作对象构造函数
+func NewOperation(db *boltdb.BoltDB) *Operation{
+	op := new(Operation)
+	op.Mydb = db
+	op.cmdOut = 
 	`
 	>>>>>>-----------------------------------------------------------
 	***  1：写入一条记录(默认格式)
@@ -37,12 +44,6 @@ type Operation struct{
 	***  0：退出！
 	>>>>>>-----------------------------------------------------------
 	`
-}
-
-//操作对象构造函数
-func NewOperation(db *boltdb.BoltDB) *Operation{
-	op := new(Operation)
-	op.Mydb = db
 	return op
 }
 
@@ -57,6 +58,12 @@ func (op *Operation) CreateUser(){
 	newUser.Password = "pswd_" + strID
 	newUser.Address = "addr_" + strID
 	op.Myuser = newUser
+}
+//提取case1，默认插入数据操作
+func (op *Operation)OPcase1(){
+		op.CreateUser()
+		op.isOK = op.Mydb.InsertBucket(op.Myuser)	//插入一条记录
+		fmt.Println(op.Myuser.Print(op.isOK))
 }
 
 //命令行操作区
@@ -79,9 +86,7 @@ func (op *Operation)CmdLoop(){
 		case 0:
 			break
 		case 1:
-			op.CreateUser()
-			op.isOK = op.Mydb.InsertBucket(op.Myuser)	//插入一条记录
-			fmt.Println(op.Myuser.Print(op.isOK))
+			op.OPcase1()
 		case 2:
 			//
 			fmt.Printf("请输入，(输入格式：username, password, address)：")

@@ -1,7 +1,6 @@
 package boltdb
 
 import(
-	"fmt"
 	"encoding/json"
 	"github.com/boltdb/bolt"
 	"../usertable"
@@ -97,15 +96,19 @@ func (b *BoltDB) GetUser(key string) []uint8{
 }
 
 //获取数据表全部信息
-func (b *BoltDB) GetUserofAll() {
+// func (b *BoltDB) GetUserofAll() (map[[]uint8] []uint8){
+	// retMap := make(map[[]uint8] []uint8)
+func (b *BoltDB) GetUserofAll() (map[string] string){
+	retMap := make(map[string] string)
 	b.MyBoltDB.View(func(tx *bolt.Tx) error{
 		b := tx.Bucket([]byte(b.myBucket))
 		b.ForEach(func(k, v []byte) error{
-			fmt.Printf("Key = %s, %s\n", k, v)
+			retMap[string(k)] = string(v)
 			return nil
 		})
 		return nil
 	})
+	return retMap
 }
 
 //删除数据表

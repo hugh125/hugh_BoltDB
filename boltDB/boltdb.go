@@ -113,7 +113,6 @@ func (b *BoltDB) DeleteBucket() error {
 	err := b.MyBoltDB.Update(func(tx *bolt.Tx) error{
 		err := tx.DeleteBucket([]byte(b.myBucket))
 		if err != nil{
-			fmt.Println(err)
 			return err
 		}
 		return nil

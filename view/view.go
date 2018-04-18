@@ -24,6 +24,7 @@ var (
 type Operation struct{
 	Mydb *boltdb.BoltDB
 	Myuser *usertable.UserTable
+	isOK bool
 }
 
 //操作对象构造函数
@@ -60,7 +61,7 @@ func (op *Operation)CmdLoop(){
 	>>>>>>-----------------------------------------------------------
 	`
 	for{
-		isOK := false
+		op.isOK = false
 		fmt.Println(cmdOut)
 
 		fmt.Printf("Input your Operation Cmd：")
@@ -78,8 +79,8 @@ func (op *Operation)CmdLoop(){
 			break
 		case 1:
 			op.CreateUser()
-			isOK = op.Mydb.InsertBucket(op.Myuser)	//插入一条记录
-			fmt.Println(op.Myuser.Print(isOK))
+			op.isOK = op.Mydb.InsertBucket(op.Myuser)	//插入一条记录
+			fmt.Println(op.Myuser.Print(op.isOK))
 		case 2:
 			//
 			fmt.Printf("请输入，(输入格式：username, password, address)：")
@@ -93,8 +94,8 @@ func (op *Operation)CmdLoop(){
 			op.Myuser.Password = newPassword
 			op.Myuser.Address = newAddress
 
-			isOK = op.Mydb.InsertBucket(op.Myuser)	//插入一条记录			
-			fmt.Println(op.Myuser.Print(isOK))
+			op.isOK = op.Mydb.InsertBucket(op.Myuser)	//插入一条记录			
+			fmt.Println(op.Myuser.Print(op.isOK))
 		case 3:
 			var queryUserName string
 			//

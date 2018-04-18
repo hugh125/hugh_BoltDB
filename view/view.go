@@ -25,6 +25,18 @@ type Operation struct{
 	Mydb *boltdb.BoltDB
 	Myuser *usertable.UserTable
 	isOK bool
+
+	cmdOut := 
+	`
+	>>>>>>-----------------------------------------------------------
+	***  1：写入一条记录(默认格式)
+	***  2：写入一条记录(输入格式：username, password, address)
+	***  3：获取一条记录
+	***  4：获取全部记录
+	***  5：删除数据表
+	***  0：退出！
+	>>>>>>-----------------------------------------------------------
+	`
 }
 
 //操作对象构造函数
@@ -49,20 +61,9 @@ func (op *Operation) CreateUser(){
 
 //命令行操作区
 func (op *Operation)CmdLoop(){
-	cmdOut := 
-	`
-	>>>>>>-----------------------------------------------------------
-	***  1：写入一条记录(默认格式)
-	***  2：写入一条记录(输入格式：username, password, address)
-	***  3：获取一条记录
-	***  4：获取全部记录
-	***  5：删除数据表
-	***  0：退出！
-	>>>>>>-----------------------------------------------------------
-	`
 	for{
 		op.isOK = false
-		fmt.Println(cmdOut)
+		fmt.Println(op.cmdOut)
 
 		fmt.Printf("Input your Operation Cmd：")
 		fmt.Scanln(&myKey)

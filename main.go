@@ -77,7 +77,7 @@ func main(){
 			break
 		case 1:
 			newUser := CreateUser(db)
-			isOK = db.UpdateBucket(newUser)	//插入一条记录
+			isOK = db.InsertBucket(newUser)	//插入一条记录
 			fmt.Println(newUser.Print(isOK))
 		case 2:
 			//
@@ -92,7 +92,7 @@ func main(){
 			newUser.Password = newPassword
 			newUser.Address = newAddress
 
-			isOK = db.UpdateBucket(newUser)	//插入一条记录			
+			isOK = db.InsertBucket(newUser)	//插入一条记录			
 			fmt.Println(newUser.Print(isOK))
 		case 3:
 			var queryUserName string

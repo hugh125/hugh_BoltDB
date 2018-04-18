@@ -64,7 +64,7 @@ func (b* BoltDB) GetID() uint64{
 //插入一条记录
 //传入用户信息表
 //返回插入结果
-func (b *BoltDB) UpdateBucket(newUser *usertable.UserTable)bool{
+func (b *BoltDB) InsertBucket(newUser *usertable.UserTable)bool{
 	err := b.MyBoltDB.Update(func(tx *bolt.Tx) error{
 		//创建数据表
 		b := tx.Bucket([]byte(b.myBucket))

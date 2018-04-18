@@ -59,66 +59,86 @@ func (op *Operation) CreateUser(){
 	newUser.Address = "addr_" + strID
 	op.Myuser = newUser
 }
+
 //提取case1，默认插入数据操作
 func (op *Operation)OPcase1(){
-		op.CreateUser()
+		op.CreateUser()	//创建用户表对象
 		op.isOK = op.Mydb.InsertBucket(op.Myuser)	//插入一条记录
 		fmt.Println(op.Myuser.Print(op.isOK))
+}
+
+//提取case2，自定义插入数据操作
+func (op *Operation)OPcase2(){
+		fmt.Printf("请输入，(输入格式：username, password, address)：")
+		fmt.Scanln(&newUsername, &newPassword, &newAddress)
+		if newUsername == ""{
+			return
+		}
+		op.CreateUser()	//创建用户表对象
+		//自定义用户信息
+		op.Myuser.Username = newUsername
+		op.Myuser.Password = newPassword
+		op.Myuser.Address = newAddress
+
+		op.isOK = op.Mydb.InsertBucket(op.Myuser)	//插入一条记录			
+		fmt.Println(op.Myuser.Print(op.isOK))
+}
+
+//提取case3，按用户名 查找记录信息
+func (op *Operation)OPcase3(){
+		var queryUserName string
+		//
+		fmt.Printf("Input your Query UserName：")
+		fmt.Scanln(&queryUserName)
+
+		value := op.Mydb.GetUser(queryUserName)	//根据用户名，获取数据表记录
+		if string(value) != ""{
+			fmt.Printf("key = %s, %s\n",queryUserName, value)
+		}else{
+			fmt.Printf("Not found (key = %s)\n", queryUserName)
+		}
+}
+
+//提取case4，遍历数据表
+func (op *Operation)OPcase4(){
+		allUser := op.Mydb.GetAllUser()			//获取数据表全部信息
+		for k := range allUser{
+			fmt.Printf("key = %s, %s\n",k, allUser[k])
+		}
+}
+
+//提取功能区显示和命令行输入
+func (op *Operation)OPCmdLoop() int{
+	op.isOK = false
+	fmt.Println(op.cmdOut)
+
+	fmt.Printf("Input your Operation Cmd：")
+	fmt.Scanln(&myKey)
+	key, err := strconv.Atoi(myKey)
+
+	//输入有误，显示错误并跳过
+	if err != nil{
+		fmt.Println(errOut)
+		return 0
+	}
+	return key
 }
 
 //命令行操作区
 func (op *Operation)CmdLoop(){
 	for{
-		op.isOK = false
-		fmt.Println(op.cmdOut)
-
-		fmt.Printf("Input your Operation Cmd：")
-		fmt.Scanln(&myKey)
-		key, err := strconv.Atoi(myKey)
-
-		//输入有误，显示错误并跳过
-		if err != nil{
-			fmt.Println(errOut)
-			continue
-		}
-		
+		key := op.OPCmdLoop()//功能区显示和命令行输入
 		switch key{
 		case 0:
 			break
 		case 1:
-			op.OPcase1()
+			op.OPcase1()//默认插入数据操作
 		case 2:
-			//
-			fmt.Printf("请输入，(输入格式：username, password, address)：")
-			fmt.Scanln(&newUsername, &newPassword, &newAddress)
-			if newUsername == ""{
-				break
-			}
-			op.CreateUser()
-			//
-			op.Myuser.Username = newUsername
-			op.Myuser.Password = newPassword
-			op.Myuser.Address = newAddress
-
-			op.isOK = op.Mydb.InsertBucket(op.Myuser)	//插入一条记录			
-			fmt.Println(op.Myuser.Print(op.isOK))
+			op.OPcase2()//自定义插入数据操作
 		case 3:
-			var queryUserName string
-			//
-			fmt.Printf("Input your Query UserName：")
-			fmt.Scanln(&queryUserName)
-
-			value := op.Mydb.GetUser(queryUserName)	//根据用户名，获取数据表记录
-			if string(value) != ""{
-				fmt.Printf("key = %s, %s\n",queryUserName, value)
-			}else{
-				fmt.Printf("Not found (key = %s)\n", queryUserName)
-			}
+			op.OPcase3()//按用户名 查找记录信息
 		case 4:
-			allUser := op.Mydb.GetAllUser()			//获取数据表全部信息
-			for k := range allUser{
-				fmt.Printf("key = %s, %s\n",k, allUser[k])
-			}
+			op.OPcase4()//遍历数据表
 		case 5:
 			op.Mydb.DeleteBucket()			//删除数据表
 			op.Mydb.CreateBucket()			//创建数据表

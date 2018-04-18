@@ -7,10 +7,6 @@ import(
 	"../usertable"
 )
 var (
-	//数据库名
-	myDBName = "./DATA/myDBName.db"	
-	//数据表名
-	myBucket = "myBucket"	
 	//错误信息
 	errOut = "!!!!!!!!!!!! ------Command error------ !!!!!!!!!!!!!"	
 	//按键值

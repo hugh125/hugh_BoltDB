@@ -25,7 +25,7 @@ var (
 	newUsername, newPassword, newAddress string
 )
 
-func CreateUser() *usertable.UserTable{
+func CreateUser(db *boltdb.BoltDB) *usertable.UserTable{
 	//创建用户表对象
 	newUser := new(usertable.UserTable)
 	newUid :=  db.GetID() //获取自增列
@@ -75,11 +75,13 @@ func main(){
 		case 0:
 			break
 		case 1:
+			newUser := CreateUser(db)
 			db.UpdateBucket(newUser)
 			// if db.UpdateBucket(u){	//插入一条记录
 			// 	fmt.Println("%d, %s, %s, %s\n", u.Id, u.Username, u.Password, u.Address)
 			// }
 		case 2:
+			newUser := CreateUser(db)
 			//
 			fmt.Printf("请输入，(输入格式：username, password, address)：")
 			fmt.Scanln(&newUsername, &newPassword, &newAddress)

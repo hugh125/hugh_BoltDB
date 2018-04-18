@@ -2,7 +2,6 @@ package boltdb
 
 import(
 	"fmt"
-	"errors"
 	"encoding/json"
 	"github.com/boltdb/bolt"
 	"../usertable"
@@ -25,7 +24,7 @@ func NewBoltDB(myDBName, myBucket string) *BoltDB{
 	//打开数据库
 	db, err := bolt.Open(myDBName, 0600, nil)
 	if err != nil{
-		fmt.Println(err)
+		return nil
 	}
 
 	b.MyBoltDB = db
@@ -44,7 +43,6 @@ func (b *BoltDB) CreateBucket() error {
 		//如果不存在则创建数据表
 		_, err := tx.CreateBucketIfNotExists([]byte(b.myBucket))
 		if err != nil{
-			fmt.Println(err.Error)
 			return err
 		}
 		return nil
@@ -77,9 +75,6 @@ func (b *BoltDB) UpdateBucket(newUser *usertable.UserTable)bool{
 			return err
 		}
 		//根据用户名，插入记录
-		if newUser.Username == ""{
-			return errors.New("Username Cannot Empty.")
-		}
 		b.Put([]byte(newUser.Username), buf)
 		return nil
 	})

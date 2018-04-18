@@ -51,10 +51,22 @@ func (b *BoltDB) CreateBucket() error {
 	return err
 }
 
+func (b* BoltDB) GetID() uint64{
+	var iret uint64 //返回ID
+	b.MyBoltDB.Update(func(tx *bolt.Tx) error{
+		b := tx.Bucket([]byte(b.myBucket))		
+		//自增
+		id , _ := b.NextSequence()
+		iret = id
+		return nil
+		})
+	return iret
+}
+
 //插入一条记录
 //传入用户信息表
 //返回插入结果
-func (b *BoltDB) UpdateBucket(newUser *usertable.UserTable) error{
+func (b *BoltDB) UpdateBucket(newUser *usertable.UserTable) (*usertable.UserTable,  bool){
 	err := b.MyBoltDB.Update(func(tx *bolt.Tx) error{
 		//创建数据表
 		b := tx.Bucket([]byte(b.myBucket))
@@ -81,10 +93,13 @@ func (b *BoltDB) UpdateBucket(newUser *usertable.UserTable) error{
 		}
 		//根据用户名，插入记录
 		b.Put([]byte(newUser.Username), buf)
-		fmt.Println(string(buf))
 		return nil
 	})
-	return err
+	if err != nil{
+		return nil, false
+	}else{
+		return newUser, true
+	}
 }
 
 //根据用户名，获取数据表记录

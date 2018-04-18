@@ -10,9 +10,9 @@ type UserTable struct{
 //构造函数
 //传入用户属性
 //返回结构体指针
-func NewUser(username, password, address string) *UserTable{
+func NewUser(uid uint64, username, password, address string) *UserTable{
 	var u = new(UserTable)
-	u.Id = 0
+	u.Id = uid
 	u.Username = username
 	u.Password = password
 	u.Address = address

@@ -19,12 +19,15 @@ var (
 	
 	//按键值
 	myKey string
+	//
+
+	newUid uint64
+	newUsername, newPassword, newAddress string
 )
 
 func main(){
 	//创建数据库操作对象
 	db := boltdb.NewBoltDB(myDBName, myBucket)
-
 
 	//创建数据表
 	db.CreateBucket()
@@ -51,24 +54,36 @@ func main(){
 		//输入有误，显示错误并跳过
 		if err != nil{
 			fmt.Println(errOut)
+			break
 			continue
 		}
 
 		//创建用户表对象
-		u := usertable.NewUser("","","")
+		newUser := new(usertable.UserTable)
+		newUid :=  db.GetID() //获取自增列
+		strID := fmt.Sprintf("%03d", newUid)
+
+		newUser.Id = newUid
+		newUser.Username = "user_" + strID
+		newUser.Password = "pswd_" + strID	
+		newUser.Address = "addr_" + strID
 		
 		switch key{
 		case 0:
 			break
 		case 1:
-			db.UpdateBucket(u)	//插入一条记录
+			db.UpdateBucket(newUser)
+			// if db.UpdateBucket(u){	//插入一条记录
+			// 	fmt.Println("%d, %s, %s, %s\n", u.Id, u.Username, u.Password, u.Address)
+			// }
 		case 2:
-			var newUsername, newPassword, newAddress string
 			//
 			fmt.Printf("请输入，(输入格式：username, password, address)：")
 			fmt.Scanln(&newUsername, &newPassword, &newAddress)
 			//
-			newUser := usertable.NewUser(newUsername, newPassword, newAddress)
+			newUser.Username = newUsername
+			newUser.Password = newPassword
+			newUser.Address = newAddress
 
 			db.UpdateBucket(newUser) //插入一条记录
 		case 3:

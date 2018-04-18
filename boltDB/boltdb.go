@@ -57,6 +57,7 @@ func (b* BoltDB) GetID() uint64{
 		b := tx.Bucket([]byte(b.myBucket))		
 		//自增
 		id , _ := b.NextSequence()
+		fmt.Println(id)
 		iret = id
 		return nil
 		})
@@ -66,25 +67,10 @@ func (b* BoltDB) GetID() uint64{
 //插入一条记录
 //传入用户信息表
 //返回插入结果
-func (b *BoltDB) UpdateBucket(newUser *usertable.UserTable) (*usertable.UserTable,  bool){
+func (b *BoltDB) UpdateBucket(newUser *usertable.UserTable)  bool{
 	err := b.MyBoltDB.Update(func(tx *bolt.Tx) error{
 		//创建数据表
 		b := tx.Bucket([]byte(b.myBucket))
-		
-		//自增
-		id , _ := b.NextSequence()
-		newUser.Id = id
-
-		strID := fmt.Sprintf("%03d", id)
-		if newUser.Username == ""{
-			newUser.Username = "user_" + strID
-		}
-		if newUser.Password == ""{
-			newUser.Password = "pswd_" + strID			
-		}
-		if newUser.Address == ""{
-			newUser.Address = "addr_" + strID			
-		}
 
 		//整理记录条
 		buf ,err := json.Marshal(newUser)
@@ -96,10 +82,9 @@ func (b *BoltDB) UpdateBucket(newUser *usertable.UserTable) (*usertable.UserTabl
 		return nil
 	})
 	if err != nil{
-		return nil, false
-	}else{
-		return newUser, true
+		return false
 	}
+	return true
 }
 
 //根据用户名，获取数据表记录

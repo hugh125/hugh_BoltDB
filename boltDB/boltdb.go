@@ -96,14 +96,12 @@ func (b *BoltDB) GetUser(key string) []uint8{
 }
 
 //获取数据表全部信息
-// func (b *BoltDB) GetUserofAll() (map[[]uint8] []uint8){
-	// retMap := make(map[[]uint8] []uint8)
 func (b *BoltDB) GetUserofAll() (map[string] string){
 	retMap := make(map[string] string)
 	b.MyBoltDB.View(func(tx *bolt.Tx) error{
 		b := tx.Bucket([]byte(b.myBucket))
 		b.ForEach(func(k, v []byte) error{
-			retMap[string(k)] = string(v)
+			retMap[string(k)] = string(v)	//赋值给 map 并返回
 			return nil
 		})
 		return nil
@@ -112,7 +110,7 @@ func (b *BoltDB) GetUserofAll() (map[string] string){
 }
 
 //删除数据表
-func (b *BoltDB) DeleteBucket() error {
+func (b *BoltDB) DeleteBucket() bool {
 	err := b.MyBoltDB.Update(func(tx *bolt.Tx) error{
 		err := tx.DeleteBucket([]byte(b.myBucket))
 		if err != nil{
@@ -120,5 +118,8 @@ func (b *BoltDB) DeleteBucket() error {
 		}
 		return nil
 	})
-	return err
+	if err != nil{
+		return false
+	}
+	return true
 }

@@ -24,6 +24,7 @@ func NewUser(uid uint64, username, password, address string) *UserTable{
 	return u
 }
 
+//打印用户信息
 func (u *UserTable) Print(isOK bool) string{
 	if !isOK {
 		return ""

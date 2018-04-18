@@ -1,0 +1,10 @@
+
+#.gitignore
+
+# 如果某些文件以及提交到版本管理中
+# 就算在.gitignore中声明了，也是不起作用的
+# 这时候先将本地缓存删除	git rm -r --cached .
+# 再执行git add				git add .
+# 							git commit -m 'update .gitignore'
+
+/DATA/myDBName.db

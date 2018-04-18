@@ -61,20 +61,20 @@ func (op *Operation) createUser(){
 }
 
 //提取case1，默认插入数据操作
-func (op *Operation)OPcase1(){
-		op.CreateUser()	//创建用户表对象
+func (op *Operation)case1OP(){
+		op.createUser()	//创建用户表对象
 		op.isOK = op.Mydb.InsertBucket(op.Myuser)	//插入一条记录
 		fmt.Println(op.Myuser.Print(op.isOK))
 }
 
 //提取case2，自定义插入数据操作
-func (op *Operation)OPcase2(){
+func (op *Operation)case2OP(){
 		fmt.Printf("请输入，(输入格式：username, password, address)：")
 		fmt.Scanln(&newUsername, &newPassword, &newAddress)
 		if newUsername == ""{
 			return
 		}
-		op.CreateUser()	//创建用户表对象
+		op.createUser()	//创建用户表对象
 		//自定义用户信息
 		op.Myuser.Username = newUsername
 		op.Myuser.Password = newPassword
@@ -85,7 +85,7 @@ func (op *Operation)OPcase2(){
 }
 
 //提取case3，按用户名 查找记录信息
-func (op *Operation)OPcase3(){
+func (op *Operation)case3OP(){
 		var queryUserName string
 		//
 		fmt.Printf("Input your Query UserName：")
@@ -100,7 +100,7 @@ func (op *Operation)OPcase3(){
 }
 
 //提取case4，遍历数据表
-func (op *Operation)OPcase4(){
+func (op *Operation)case4OP(){
 		allUser := op.Mydb.GetAllUser()			//获取数据表全部信息
 		for k := range allUser{
 			fmt.Printf("key = %s, %s\n",k, allUser[k])
@@ -108,7 +108,7 @@ func (op *Operation)OPcase4(){
 }
 
 //提取功能区显示和命令行输入
-func (op *Operation)OPCmdLoop() int{
+func (op *Operation)cmdLoopOP() int{
 	op.isOK = false
 	fmt.Println(op.cmdOut)
 
@@ -127,18 +127,18 @@ func (op *Operation)OPCmdLoop() int{
 //命令行操作区
 func (op *Operation)CmdLoop(){
 	for{
-		key := op.OPCmdLoop()//功能区显示和命令行输入
+		key := op.cmdLoopOP()//功能区显示和命令行输入
 		switch key{
 		case 0:
 			break
 		case 1:
-			op.OPcase1()//默认插入数据操作
+			op.case1OP()//默认插入数据操作
 		case 2:
-			op.OPcase2()//自定义插入数据操作
+			op.case2OP()//自定义插入数据操作
 		case 3:
-			op.OPcase3()//按用户名 查找记录信息
+			op.case3OP()//按用户名 查找记录信息
 		case 4:
-			op.OPcase4()//遍历数据表
+			op.case4OP()//遍历数据表
 		case 5:
 			op.Mydb.DeleteBucket()			//删除数据表
 			op.Mydb.CreateBucket()			//创建数据表

@@ -58,6 +58,7 @@ func main(){
 	`
 
 	for{
+		isOK := false
 		fmt.Println(cmdOut)
 
 		fmt.Printf("Input your Operation Cmd：")
@@ -76,21 +77,23 @@ func main(){
 			break
 		case 1:
 			newUser := CreateUser(db)
-			db.UpdateBucket(newUser)
-			// if db.UpdateBucket(u){	//插入一条记录
-			// 	fmt.Println("%d, %s, %s, %s\n", u.Id, u.Username, u.Password, u.Address)
-			// }
+			isOK = db.UpdateBucket(newUser)	//插入一条记录
+			fmt.Println(newUser.Print(isOK))
 		case 2:
-			newUser := CreateUser(db)
 			//
 			fmt.Printf("请输入，(输入格式：username, password, address)：")
 			fmt.Scanln(&newUsername, &newPassword, &newAddress)
+			if newUsername == ""{
+				break
+			}
+			newUser := CreateUser(db)
 			//
 			newUser.Username = newUsername
 			newUser.Password = newPassword
 			newUser.Address = newAddress
 
-			db.UpdateBucket(newUser) //插入一条记录
+			isOK = db.UpdateBucket(newUser)	//插入一条记录			
+			fmt.Println(newUser.Print(isOK))
 		case 3:
 			var queryUserName string
 			//

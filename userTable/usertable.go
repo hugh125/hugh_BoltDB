@@ -1,5 +1,9 @@
 package usertable
 
+import(
+	"fmt"
+)
+
 type UserTable struct{
 	Id uint64
 	Username string
@@ -18,4 +22,11 @@ func NewUser(uid uint64, username, password, address string) *UserTable{
 	u.Address = address
 
 	return u
+}
+
+func (u *UserTable) Print(isOK bool) string{
+	if !isOK {
+		return ""
+	}
+	return fmt.Sprintf("{id:%d, username:%s, password:%s, address:%s}", u.Id, u.Username, u.Password, u.Address)
 }

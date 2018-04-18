@@ -2,6 +2,7 @@ package boltdb
 
 import(
 	"fmt"
+	"errors"
 	"encoding/json"
 	"github.com/boltdb/bolt"
 	"../usertable"
@@ -76,6 +77,9 @@ func (b *BoltDB) UpdateBucket(newUser *usertable.UserTable)bool{
 			return err
 		}
 		//根据用户名，插入记录
+		if newUser.Username == ""{
+			return errors.New("Username Cannot Empty.")
+		}
 		b.Put([]byte(newUser.Username), buf)
 		return nil
 	})

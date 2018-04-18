@@ -57,7 +57,6 @@ func (b* BoltDB) GetID() uint64{
 		b := tx.Bucket([]byte(b.myBucket))		
 		//自增
 		id , _ := b.NextSequence()
-		fmt.Println(id)
 		iret = id
 		return nil
 		})
@@ -67,11 +66,10 @@ func (b* BoltDB) GetID() uint64{
 //插入一条记录
 //传入用户信息表
 //返回插入结果
-func (b *BoltDB) UpdateBucket(newUser *usertable.UserTable)  bool{
+func (b *BoltDB) UpdateBucket(newUser *usertable.UserTable)bool{
 	err := b.MyBoltDB.Update(func(tx *bolt.Tx) error{
 		//创建数据表
 		b := tx.Bucket([]byte(b.myBucket))
-
 		//整理记录条
 		buf ,err := json.Marshal(newUser)
 		if err != nil{

@@ -2,6 +2,7 @@ package main
 
 import(
 	"./boltdb"
+	"./view"
 )
 
 var (
@@ -16,6 +17,8 @@ func main(){
 	db.CreateBucket()
 
 	// 3、开始循环等待命令行操作
+	op := view.NewOperation(db)
+	op.CmdLoop()
 	// 4、检测退出循环
 
 	// 5、	关闭数据库

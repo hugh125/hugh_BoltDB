@@ -49,6 +49,7 @@ func (b *BoltDB) CreateBucket() error {
 	return err
 }
 
+//获取自增列的值
 func (b* BoltDB) GetID() uint64{
 	var iret uint64 //返回ID
 	b.MyBoltDB.Update(func(tx *bolt.Tx) error{

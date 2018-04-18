@@ -64,7 +64,6 @@ func (b *BoltDB) UpdateBucket(newUser *usertable.UserTable) error{
 		newUser.Id = id
 
 		strID := fmt.Sprintf("%03d", id)
-		fmt.Println(strID)
 		if newUser.Username == ""{
 			newUser.Username = "user_" + strID
 		}

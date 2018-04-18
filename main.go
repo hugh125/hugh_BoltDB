@@ -100,7 +100,12 @@ func main(){
 			fmt.Printf("Input your Query UserName：")
 			fmt.Scanln(&queryUserName)
 
-			db.GetUser(queryUserName)	//根据用户名，获取数据表记录
+			value := db.GetUser(queryUserName)	//根据用户名，获取数据表记录
+			if string(value) != ""{
+				fmt.Printf("key = %s, %s\n",queryUserName, value)
+			}else{
+				fmt.Printf("Not found (key = %s)\n", queryUserName)
+			}
 		case 4:
 			db.GetUserofAll()			//获取数据表全部信息
 		case 5:

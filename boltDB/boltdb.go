@@ -85,20 +85,15 @@ func (b *BoltDB) UpdateBucket(newUser *usertable.UserTable)bool{
 }
 
 //根据用户名，获取数据表记录
-func (b *BoltDB) GetUser(key string) error{
-	err := b.MyBoltDB.View(func(tx *bolt.Tx) error {
+func (b *BoltDB) GetUser(key string) []uint8{
+	var ret []uint8
+	b.MyBoltDB.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(b.myBucket))
 		//根据用户名，提取记录
-		v := b.Get([]byte(key))	//key = username
-		if string(v) != ""{
-			fmt.Printf("key = %s, %s\n",key, v)
-		}else{
-			fmt.Printf("Not found (key = %s)\n", key)
-		}
-		//fmt.Println(v)
+		ret = b.Get([]byte(key))	//key = username
 		return nil
 	})
-	return err
+	return ret
 }
 
 //获取数据表全部信息

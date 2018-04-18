@@ -48,7 +48,7 @@ func NewOperation(db *boltdb.BoltDB) *Operation{
 }
 
 //创建用户表对象
-func (op *Operation) CreateUser(){
+func (op *Operation) createUser(){
 	newUser := new(usertable.UserTable)
 	newUid :=  op.Mydb.GetID() //获取自增列
 	strID := fmt.Sprintf("%03d", newUid)

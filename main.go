@@ -107,7 +107,10 @@ func main(){
 				fmt.Printf("Not found (key = %s)\n", queryUserName)
 			}
 		case 4:
-			db.GetUserofAll()			//获取数据表全部信息
+			userOfAll := db.GetUserofAll()			//获取数据表全部信息
+			for k := range userOfAll{
+				fmt.Printf("key = %s, %s\n",k, userOfAll[k])
+			}
 		case 5:
 			db.DeleteBucket()			//删除数据表
 			db.CreateBucket()			//创建数据表

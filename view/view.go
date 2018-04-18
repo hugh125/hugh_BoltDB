@@ -14,10 +14,9 @@ var (
 	//错误信息
 	errOut = "!!!!!!!!!!!! ------Command error------ !!!!!!!!!!!!!"	
 	//按键值
-	myKey string	//
-	newUid uint64
-	newUsername, newPassword, newAddress string
+	myKey string	//按键值
 
+	newUsername, newPassword, newAddress string
 )
 
 //operation 操作对象
@@ -50,10 +49,9 @@ func NewOperation(db *boltdb.BoltDB) *Operation{
 //创建用户表对象
 func (op *Operation) createUser(){
 	newUser := new(usertable.UserTable)
-	newUid :=  op.Mydb.GetID() //获取自增列
-	strID := fmt.Sprintf("%03d", newUid)
+	newUser.Id =  op.Mydb.GetID() //获取自增列
+	strID := fmt.Sprintf("%03d", newUser.Id)
 
-	newUser.Id = newUid
 	newUser.Username = "user_" + strID
 	newUser.Password = "pswd_" + strID
 	newUser.Address = "addr_" + strID

@@ -3,8 +3,8 @@ package view
 import(
 	"fmt"
 	"strconv"
-	"../boltdb"
-	"../usertable"
+	"hugh_BoltDB/boltdb"
+	"hugh_BoltDB/usertable"
 )
 var (
 	//错误信息

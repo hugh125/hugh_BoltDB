@@ -3,7 +3,7 @@ package boltdb
 import(
 	"encoding/json"
 	"github.com/boltdb/bolt"
-	"../usertable"
+	"hugh_BoltDB/usertable"
 )
 
 type BoltDB struct{

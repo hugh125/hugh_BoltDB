@@ -1,8 +1,8 @@
 package main
 
 import(
-	"./boltdb"
-	"./view"
+	"hugh_BoltDB/boltdb"
+	"hugh_BoltDB/view"
 )
 
 var (

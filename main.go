@@ -19,7 +19,7 @@ func main(){
 
 	// 3、开始循环等待命令行操作
 	op := view.NewOperation(db)
-	op.CmdLoop()
+	op.Run()
 
 	// 4、关闭数据库
 	defer db.Close()	//关闭数据库

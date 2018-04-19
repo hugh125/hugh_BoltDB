@@ -119,7 +119,7 @@ func (op *Operation)cmdLoopOP() int{
 }
 
 //命令行操作区
-func (op *Operation)CmdLoop(){
+func (op *Operation)Run(){
 	for{
 		key := op.cmdLoopOP()	//功能区显示和命令行输入
 		switch key{

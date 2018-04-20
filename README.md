@@ -7,7 +7,7 @@ hugh_BoltDB_Description
 
 远程仓库
 
-	git remote add origin git@github.com:hugh125/learn_Flask.git 创建远程库
+	git remote add origin git@github.com:hugh125/hugh_BoltDB.git 创建远程库
 	git remote rm  origin 删除远程库
 	git push -u original master 
 		第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，

@@ -3,8 +3,8 @@ package view
 import(
 	"fmt"
 	"strconv"
-	"hugh_BoltDB/boltdb"
-	"hugh_BoltDB/usertable"
+	"../boltdb"
+	"../usertable"
 )
 var (
 	//错误信息
@@ -31,12 +31,12 @@ func NewOperation(db *boltdb.BoltDB) *Operation{
 	op.cmdOut = 
 	`
 	>>>>>>-----------------------------------------------------------
-	***  1：写入一条记录(默认格式)
-	***  2：写入一条记录(输入格式：username, password, address)
-	***  3：获取一条记录
-	***  4：获取全部记录
-	***  5：删除数据表
-	***  0：退出！
+	***  1: insert into DataDB (default format)
+	***  2: insert into DataDB (custom  format : username, password, address)
+	***  3: get one user information
+	***  4: get all user information
+	***  5: deleta DataDB
+	***  0: Exit ! 
 	>>>>>>-----------------------------------------------------------
 	`
 	return op
@@ -63,7 +63,7 @@ func (op *Operation)case1OP(){
 
 //case2，自定义插入数据操作
 func (op *Operation)case2OP(){
-		fmt.Printf("请输入，(输入格式：username, password, address)：")
+		fmt.Printf("Please input you data, (eg.format: username, password, address): ")
 		fmt.Scanln(&newUsername, &newPassword, &newAddress)
 		if newUsername == ""{
 			return
@@ -82,7 +82,7 @@ func (op *Operation)case2OP(){
 func (op *Operation)case3OP(){
 		var queryUserName string
 		//
-		fmt.Printf("Input your Query UserName：")
+		fmt.Printf("Input your Query UserName: ")
 		fmt.Scanln(&queryUserName)
 
 		value := op.Mydb.GetUser(queryUserName)	//根据用户名，获取数据表记录
@@ -106,7 +106,7 @@ func (op *Operation)cmdLoopOP() int{
 	op.isOK = false
 	fmt.Println(op.cmdOut)
 
-	fmt.Printf("Input your Operation Cmd：")
+	fmt.Printf("Input your Operation Cmd: ")
 	fmt.Scanln(&myKey)
 	key, err := strconv.Atoi(myKey)
 

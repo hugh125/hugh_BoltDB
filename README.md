@@ -2,9 +2,11 @@
 hugh_BoltDB_Description
 
 1、learn boltdb and use golang
+
 2、deploy this environment and go run
 
 远程仓库
+
 	git remote add origin git@github.com:hugh125/learn_Flask.git 创建远程库
 	git remote rm  origin 删除远程库
 	git push -u original master 
